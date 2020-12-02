@@ -1,6 +1,7 @@
 # Airbnb Item Detail Page: Photo Carousel
 
 Front-End: TimothyAkana
+
 Back-End: Lucyyxc
 
 ## Table of Contents
