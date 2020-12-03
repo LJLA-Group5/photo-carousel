@@ -16,14 +16,17 @@ Back-End: Lucyyxc
 1. Create / POST: add favorite
     * __Endpoint__: '/api/photo-carousel/favorites/'
     * __Path Params__: none
-    * __Request Body__:
+    * __Request Body__: Expects JSON with the following keys
+    ```json
         {
           userId: Number,
           listName: String,
           favoriteLists: Array,
           favoritePicture: String,
         }
-    * __Response Object__:
+    ```
+    * __Response Object__: Status code 201
+    ```json
         {
           _id: Number,
           userId: Number,
@@ -31,12 +34,13 @@ Back-End: Lucyyxc
           favoriteLists: Array,
           favoritePicture: String,
         }
-
-1. Read / GET: listing photos
+    ```
+1. Read / GET: get listing photos
     * __Endpoint__: '/api/photo-carousel/:id/photos/'
     * __Path Params__: listingId
     * __Request Body__: { listingId: id }
-    * __Response Object__:
+    * __Response Object__: JSON
+    ```json
         {
           id: Number,
           listingId: Number,
@@ -47,12 +51,13 @@ Back-End: Lucyyxc
           listingNumReviews: Number,
           listingLocation: String,
         }
-
-1. Read / GET: user favorites
+    ```
+1. Read / GET: get user favorites
     * __Endpoint__: '/api/photo-carousel/favorites/:userId/'
     * __Path Params__: userId
     * __Request Body__: { userId: userId }
-    * __Response Object__:
+    * __Response Object__: JSON
+    ```json
         {
           _id: Number,
           userId: Number,
@@ -60,18 +65,18 @@ Back-End: Lucyyxc
           favoriteLists: Array,
           favoritePicture: String,
         }
-
-1. Update / PUT
+    ```
+1. Update / PUT: update user favorites
     * __Endpoint__: '/api/photo-carousel/favorites/'
     * __Path Params__: none
     * __Request Body__: { userId: userId, listName: listName }
     * __Response Object__: { userId: userId, listName: listName }
 
-1. Delete / DELETE
+1. Delete / DELETE: delete listing
     * __Endpoint__: '/api/photo-carousel/:id/photos/'
     * __Path Params__: listingId
     * __Request Body__: { listingId: id }
-    * __Response Object__: Status code 200
+    * __Response Object__: Status code 204
 
 ## Usage
 
