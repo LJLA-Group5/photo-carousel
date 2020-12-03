@@ -69,9 +69,24 @@ Back-End: Lucyyxc
 1. Update / PUT: update user favorites
     * __Endpoint__: '/api/photo-carousel/favorites/'
     * __Path Params__: none
-    * __Request Body__: { userId: userId, listName: listName }
-    * __Response Object__: { userId: userId, listName: listName }
-
+    * __Request Body__: JSON
+        ```json
+        {
+          userId: Number,
+          listName: String,
+          favoriteLists: Array,
+        }
+        ```
+    * __Response Object__:
+        ```json
+        {
+          _id: Number,
+          userId: Number,
+          listName: String,
+          favoriteLists: Array,
+          favoritePicture: String,
+        }
+        ```
 1. Delete / DELETE: delete listing
     * __Endpoint__: '/api/photo-carousel/:id/photos/'
     * __Path Params__: listingId
