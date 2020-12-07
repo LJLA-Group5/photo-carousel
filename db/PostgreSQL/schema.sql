@@ -4,8 +4,8 @@ CREATE SCHEMA airbnb;
 -- 10M listings
 CREATE TABLE airbnb.listingDetails (
   listingId SERIAL PRIMARY KEY,
-  listingName VARCHAR(100) NOT NULL,
-  listingLocation VARCHAR(100) NOT NULL,
+  listingName VARCHAR(60) NOT NULL,
+  listingLocation VARCHAR(60) NOT NULL,
   listingStars REAL,
   listingNumReviews SMALLINT,
   photos VARCHAR[]
@@ -13,21 +13,22 @@ CREATE TABLE airbnb.listingDetails (
 
 CREATE TABLE airbnb.users (
   userId SERIAL PRIMARY KEY,
-  userName VARCHAR(100) NOT NULL
+  userName VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE airbnb.userLists (
-  listName VARCHAR(100) NOT NULL,
+  listId SERIAL PRIMARY KEY,
   userId INT REFERENCES users(userId),
+  listName VARCHAR(40) NOT NULL
 );
 
 -- join table
 CREATE TABLE airbnb.favoriteListings (
   favoriteId SERIAL PRIMARY KEY,
-  listName VARCHAR(100) REFERENCES userLists(listName),
+  listId INT REFERENCES userLists(listId),
   listingId INT REFERENCES listingDetails(listingId),
   order SERIAL SMALLINT NOT NULL
-  -- order 1 is favorite pic
+  -- smallest order is favorite pic (first liked)
 );
 
 -- will benchmark embedded photo arr and seperate photo table later, but for now since query speed for patch/post does not matter since I will not need to change the order of the photos or add/delete a photo, I will use an embedded photo arr
