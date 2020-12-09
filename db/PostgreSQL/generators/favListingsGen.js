@@ -6,7 +6,7 @@ const path = require('path');
 
 // 1M favorite listings (200K userLists so on average 5 listings per list)
 const favoriteListingsStream = fs.createWriteStream(path.join(__dirname, '/../data/psqlfavoriteListingsData.csv'));
-favoriteListingsStream.write('favoriteId, listId, listingId, order\n');
+favoriteListingsStream.write('favoriteId, listId, listingId\n');
 let favoriteListingCount = 1000000;
 
 const genNumBtwn = (min, max) => Math.floor((Math.random() * (max - min)) + min);
@@ -16,8 +16,7 @@ const genFavoriteListings = () => {
   const favoriteId = favoriteListingCount;
   const listId = genNumBtwn(1, 200000);
   const listingId = genNumBtwn(1, 10000000);
-  const order = favoriteListingCount;
-  const favoriteListingEntry = `${favoriteId}, ${listId}, ${listingId}, ${order}\n`;
+  const favoriteListingEntry = `${favoriteId}, ${listId}, ${listingId}\n`;
   const streamOkay = favoriteListingsStream.write(favoriteListingEntry);
   favoriteListingCount -= 1;
   if (!streamOkay) favoriteListingsStream.once('drain', genFavoriteListings);
