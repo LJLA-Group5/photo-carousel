@@ -2,7 +2,7 @@ const fs = require('fs');
 const faker = require('faker');
 const path = require('path');
 
-// const debug = require('debug')('app:gen:psql');
+const debug = require('debug')('app:gen:psql');
 
 // 10M listings
 const listingsStream = fs.createWriteStream(path.join(__dirname, '/../data/psqlListingsData.csv'));
@@ -25,11 +25,11 @@ const genListings = () => {
   if (listingCount === 0) return listingsStream.end();
   const listingId = listingCount;
   const listingName = faker.lorem.words(3);
-  const listingLocation = `${faker.address.city()}, ${faker.address.stateAbbr()}`;
+  const listingLocation = `"${faker.address.city()}, ${faker.address.stateAbbr()}"`;
   const listingStars = getListingStars();
   const listingNumReviews = genNumBtwn(10, 1000);
   // get a random number of photos per listing between 10 and 30
-  const photos = getPhotoUrls(genNumBtwn(10, 30));
+  const photos = `"{${getPhotoUrls(genNumBtwn(10, 30))}}"`;
   const listingEntry = `${listingId}, ${listingName}, ${listingLocation}, ${listingStars}, ${listingNumReviews}, ${photos}\n`;
   const streamOkay = listingsStream.write(listingEntry);
   listingCount -= 1;

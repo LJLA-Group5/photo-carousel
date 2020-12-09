@@ -8,7 +8,7 @@ CREATE TABLE airbnb.listingDetails (
   listingLocation VARCHAR(60) NOT NULL,
   listingStars REAL,
   listingNumReviews SMALLINT,
-  photos VARCHAR[]
+  photos TEXT[]
 );
 
 CREATE TABLE airbnb.users (
@@ -27,8 +27,7 @@ CREATE TABLE airbnb.favoriteListings (
   favoriteId SERIAL PRIMARY KEY,
   listId INT REFERENCES userLists(listId),
   listingId INT REFERENCES listingDetails(listingId),
-  order SERIAL SMALLINT NOT NULL
-  -- smallest order is favorite pic (first liked)
+  -- smallest favoriteId is favorite pic (first liked)
 );
 
 -- will benchmark embedded photo arr and seperate photo table later, but for now since query speed for patch/post does not matter since I will not need to change the order of the photos or add/delete a photo, I will use an embedded photo arr

@@ -2,11 +2,11 @@ const fs = require('fs');
 const faker = require('faker');
 const path = require('path');
 
-// const debug = require('debug')('app:gen:psql');
+// const debug = require('debug')('app:gen:arango');
 
 // 10M listings
 const listingsStream = fs.createWriteStream(path.join(__dirname, '/../data/arangoListingsData.csv'));
-listingsStream.write('listingId, listingName, listingLocation, listingStars, listingNumReviews, photos\n');
+listingsStream.write('_key, listingName, listingLocation, listingStars, listingNumReviews, photos\n');
 let listingCount = 10000000;
 
 const genNumBtwn = (min, max) => Math.floor((Math.random() * (max - min)) + min);
@@ -23,14 +23,14 @@ const getPhotoUrls = (numPhotos) => {
 
 const genListings = () => {
   if (listingCount === 0) return listingsStream.end();
-  const listingId = listingCount;
+  const _key = listingCount;
   const listingName = faker.lorem.words(3);
-  const listingLocation = `${faker.address.city()}, ${faker.address.stateAbbr()}`;
+  const listingLocation = `"${faker.address.city()}, ${faker.address.stateAbbr()}"`;
   const listingStars = getListingStars();
   const listingNumReviews = genNumBtwn(10, 1000);
   // get a random number of photos per listing between 10 and 30
-  const photos = getPhotoUrls(genNumBtwn(10, 30));
-  const listingEntry = `${listingId}, ${listingName}, ${listingLocation}, ${listingStars}, ${listingNumReviews}, ${photos}\n`;
+  const photos = `[${getPhotoUrls(genNumBtwn(10, 30))}]`;
+  const listingEntry = `${_key}, ${listingName}, ${listingLocation}, ${listingStars}, ${listingNumReviews}, ${photos}\n`;
   const streamOkay = listingsStream.write(listingEntry);
   listingCount -= 1;
   if (!streamOkay) listingsStream.once('drain', genListings);
