@@ -1,4 +1,5 @@
-require('dotenv').config({path:`${__dirname}/../../../.env`});const debug = require('debug')('app:psql:seed');
+require('dotenv').config({path:`${__dirname}/../../../.env`});
+const debug = require('debug')('app:psql:seed');
 // PostgreSQL's node client
 const {Client} = require('pg');
 

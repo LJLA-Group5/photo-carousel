@@ -35,4 +35,6 @@ CREATE TABLE airbnb.favoriteListings (
 --   photoId SERIAL PRIMARY KEY,
 --   listingId INT REFERENCES listingDetails(listingId),
 --   photoUrl VARCHAR(250) NOT NULL,
+--   description
+--   user
 -- );
