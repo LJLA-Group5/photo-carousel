@@ -5,8 +5,7 @@ const path = require('path');
 // const debug = require('debug')('app:gen:arango');
 
 // 10M listings
-const listingsStream = fs.createWriteStream(path.join(__dirname, '/../data/arangoListingsData.csv'));
-listingsStream.write('_key, listingName, listingLocation, listingStars, listingNumReviews, photos\n');
+const listingsStream = fs.createWriteStream(path.join(__dirname, '/../data/arangoListingsData.json'));
 let listingCount = 10000000;
 
 const genNumBtwn = (min, max) => Math.floor((Math.random() * (max - min)) + min);
@@ -20,18 +19,19 @@ const getPhotoUrls = (numPhotos) => {
   }
   return photoArr;
 }
-
+// kept listingStars as string and listingNumReviews as number since that is what the front end expects
 const genListings = () => {
   if (listingCount === 0) return listingsStream.end();
-  const _key = listingCount;
-  const listingName = faker.lorem.words(3);
-  const listingLocation = `"${faker.address.city()}, ${faker.address.stateAbbr()}"`;
-  const listingStars = getListingStars();
-  const listingNumReviews = genNumBtwn(10, 1000);
-  // get a random number of photos per listing between 10 and 30
-  const photos = `[${getPhotoUrls(genNumBtwn(10, 30))}]`;
-  const listingEntry = `${_key}, ${listingName}, ${listingLocation}, ${listingStars}, ${listingNumReviews}, ${photos}\n`;
-  const streamOkay = listingsStream.write(listingEntry);
+  let listingEntry = {
+    _key: `${listingCount}`,
+    listingName: faker.lorem.words(3),
+    listingLocation: `${faker.address.city()}, ${faker.address.stateAbbr()}`,
+    listingStars: getListingStars(),
+    listingNumReviews: genNumBtwn(10, 1000),
+    // get a random number of photos per listing between 10 and 30
+    photos : getPhotoUrls(genNumBtwn(10, 30))
+  }
+  const streamOkay = listingsStream.write(`${JSON.stringify(listingEntry)}\n`);
   listingCount -= 1;
   if (!streamOkay) listingsStream.once('drain', genListings);
   else genListings();
