@@ -2,7 +2,8 @@
   "name": "photo-carousel",
   "version": "",
   "description": "photo carousel gallery for a listing",
-  "author": "Timothy Akana",
+  "frontend author": "Timothy Akana",
+  "backend author": "Lucy Chen",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
@@ -13,17 +14,24 @@
     "seed-data": "node seedData/updateDatabase.js",
     "coverage": "jest --collect-coverage",
     "test": "jest",
-    "build-dev": "webpack --watch",
-    "start-dev": "nodemon server/index.js"
+    "build-dev": "webpack",
+    "start-dev": "nodemon server/index.js",
+    "production": "nohup node server/index.js --min-semi-space-size=128 &"
   },
   "dependencies": {
+    "arangojs": "^5.8.0",
     "axios": "^0.21.0",
+    "csv-write-stream": "^2.0.0",
+    "debug": "^4.3.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.13",
     "morgan": "^1.10.0",
-    "styled-components": "^5.2.1",
+    "newrelic": "^7.0.2",
+    "pg": "^8.5.1",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -36,7 +44,6 @@
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
