@@ -46,18 +46,19 @@ class App extends React.Component {
   componentDidMount() {
     const id = window.location.pathname.split('/')[1];
     this.loadListingPhotos(id);
-    this.checkFavorite();
+    // this.checkFavorite();
   }
 
   loadListingPhotos(id) {
     axios.get(`/api/photo-carousel/${id}/photos`)
-      .then((results) => {
+    .then((results) => {
+      console.log(results.data);
         this.setState({
-          carouselPhotos: results.data,
-          listingName: results.data[0].listingName,
-          listingStars: results.data[0].listingStars,
-          listingNumReviews: results.data[0].listingNumReviews,
-          listingLocation: results.data[0].listingLocation,
+          carouselPhotos: results.data[0].photos,
+          listingName: results.data[0].listingname,
+          listingStars: results.data[0].listingstars,
+          listingNumReviews: results.data[0].listingnumreviews,
+          listingLocation: results.data[0].listinglocation,
         });
       })
       .catch((error) => {
